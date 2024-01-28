@@ -119,9 +119,10 @@ function HockForm() {
                   name="password"
                   type="password"  
                   placeholder='Enter Password'
-                  {...register("password", {required:'Passwoed is Require', minLength:{value:6 , message:"Your Must be 6 Latter"}})}
+                  {...register("password", {required:'Passwoed is Require', pattern:/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/, minLength:{value:8 , message:"Your Must be 8 Latter"}})}
                   className="block w-full rounded-md border-0 pl-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                 {errors.password?.type === 'pattern' && (<p className=' text-red-500 font-bold p-1 '> min 8 letter password, with at least a symbol, upper and lower case letters and a number </p>) }
                        <p className=' text-red-500 font-bold p-1 '>{errors.password?.message } </p>
               </div>
             </div>
