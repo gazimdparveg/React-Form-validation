@@ -6,10 +6,19 @@ function HockForm() {
   const {
     register,
     handleSubmit,
-    formState:{errors}
+    formState:{errors},
+    watch
   } = useForm()
 
-  const onSubmit = (data) => console.log(data)
+  const onSubmit = (data) => {
+    const datas = {
+      name: data.name , 
+      email: data.email , 
+      age : data.age, 
+      Pass :  data.password
+    }
+    console.log(datas)
+  }
 
   return (
     <div>
@@ -110,9 +119,10 @@ function HockForm() {
                   name="password"
                   type="password"  
                   placeholder='Enter Password'
-                  {...register("password")}
+                  {...register("password", {required:'Passwoed is Require', minLength:{value:6 , message:"Your Must be 6 Latter"}})}
                   className="block w-full rounded-md border-0 pl-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                       <p className=' text-red-500 font-bold p-1 '>{errors.password?.message } </p>
               </div>
             </div>
              
@@ -131,9 +141,14 @@ function HockForm() {
                   name="Repassword"
                   type="password"  
                   placeholder='Enter Re-Password'
-                  {...register("repassword")}
+                  {...register("repassword",{required:"Re-Password id Required", validate:date =>{
+                    if(watch('password') !== date){
+                      return "Your Password is not Match "
+                    }
+                  }})}
                   className="block w-full rounded-md border-0 pl-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                <p className=' text-red-500 font-bold p-1 '>{errors.repassword?.message } </p>
               </div>
             </div>
 
